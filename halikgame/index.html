@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Казино от Халикова</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: #ff00cc;
+            --secondary-glow: #3333ff;
+            --accent-gold: #ffd700;
+            --bg-dark: #0a0a12;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 204, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(51, 51, 255, 0.1) 0%, transparent 40%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .header-right { display: flex; align-items: center; gap: 15px; }
+
+        .balance-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .balance-icon { color: var(--accent-gold); font-size: 20px; }
+
+        .balance-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .donate-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(45deg, #ff00cc, #ff8c00);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 204, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .donate-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 0, 204, 0.7); }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            gap: 30px;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary-glow); top: 5%; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: var(--secondary-glow); bottom: 5%; right: -50px; }
+
+        .game-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--primary-glow), transparent 30%);
+            animation: rotate 10s linear infinite;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle { color: #aaa; margin-bottom: 40px; font-weight: 300; letter-spacing: 1px; }
+
+        .slots { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; perspective: 1000px; }
+
+        .reel {
+            width: 120px; height: 120px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+            transition: transform 0.1s, box-shadow 0.3s, border-color 0.3s;
+            position: relative; overflow: hidden;
+        }
+
+        .reel img {
+            width: 80%; height: 80%; object-fit: contain;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+
+        .reel.spinning { animation: shake 0.1s infinite; }
+
+        @keyframes shake {
+            0% { transform: translateY(-2px); }
+            50% { transform: translateY(2px); }
+            100% { transform: translateY(-2px); }
+        }
+
+        .reel::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.5) 100%);
+            pointer-events: none;
+        }
+
+        .controls { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+        .bet-controls {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bet-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s;
+        }
+
+        .bet-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .bet-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .bet-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            min-width: 80px;
+            color: var(--accent-gold);
+        }
+
+        .spin-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+            border: none;
+            padding: 20px 80px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(255, 0, 204, 0.4);
+            text-transform: uppercase;
+        }
+
+        .spin-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 0, 204, 0.6); }
+        .spin-btn:active:not(:disabled) { transform: scale(0.95); }
+        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            height: 30px;
+            transition: all 0.3s;
+        }
+
+        .win-text {
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px var(--accent-gold);
+            animation: popIn 0.5s ease-out;
+        }
+
+        .lose-text { color: #ff4444; text-shadow: 0 0 10px #ff4444; }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .paytable-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .paytable-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, var(--accent-gold), var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .paytable { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+
+        .paytable thead th {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .paytable thead th:last-child { text-align: right; }
+
+        .paytable tbody tr {
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .paytable tbody tr:hover {
+            background: rgba(255, 0, 204, 0.08);
+            transform: translateX(5px);
+            box-shadow: -3px 0 0 var(--primary-glow);
+        }
+
+        .paytable td { padding: 14px 15px; font-size: 15px; vertical-align: middle; }
+        .paytable td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+        .paytable td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; text-align: right; }
+
+        .combo-symbols { display: inline-flex; align-items: center; gap: 4px; }
+        .combo-symbols img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2)); }
+        .combo-name { font-weight: 500; color: #ddd; font-size: 14px; }
+
+        .combo-multiplier {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .combo-multiplier.jackpot { color: var(--primary-glow); text-shadow: 0 0 10px var(--primary-glow); }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .badge-jackpot { background: linear-gradient(45deg, var(--accent-gold), #ff8c00); color: #000; }
+        .badge-hot { background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); color: #fff; }
+
+        .paytable-note { margin-top: 20px; text-align: center; font-size: 12px; color: #666; line-height: 1.6; }
+        .paytable-note strong { color: var(--accent-gold); }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ДОНАТА ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .donate-modal {
+            background: linear-gradient(145deg, #14141f, #0a0a12);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 35px 30px;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 0, 204, 0.15);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.25s;
+            font-family: Arial, sans-serif;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 0, 204, 0.2);
+            border-color: var(--primary-glow);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--accent-gold), var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .modal-subtitle { text-align: center; color: #888; font-size: 13px; margin-bottom: 25px; }
+
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .amount-option {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 14px 8px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.25s;
+            position: relative;
+        }
+
+        .amount-option:hover {
+            border-color: var(--primary-glow);
+            background: rgba(255, 0, 204, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .amount-option.selected {
+            border-color: var(--accent-gold);
+            background: rgba(255, 215, 0, 0.12);
+            color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .amount-option.selected::before {
+            content: '✓';
+            position: absolute;
+            top: 4px; right: 6px;
+            font-size: 11px;
+            color: var(--accent-gold);
+        }
+
+        .custom-amount-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+
+        .custom-amount-wrap input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.25s;
+        }
+
+        .custom-amount-wrap input::placeholder { color: #555; }
+        .custom-amount-wrap input:focus { border-color: var(--primary-glow); box-shadow: 0 0 15px rgba(255, 0, 204, 0.2); }
+
+        .custom-amount-wrap .currency {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-gold);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .pay-btn {
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 25px rgba(255, 0, 204, 0.4);
+        }
+
+        .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(255, 0, 204, 0.7); }
+        .pay-btn:active { transform: translateY(0) scale(0.98); }
+
+        /* ===== ПОЛНОЭКРАННОЕ СООБЩЕНИЕ ===== */
+        .fullscreen-toast {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(5, 5, 10, 0.92);
+            backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .fullscreen-toast.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .fullscreen-toast-inner {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            background: linear-gradient(145deg, #14141f, #0a0a12);
+            border: 2px solid var(--primary-glow);
+            border-radius: 30px;
+            box-shadow: 0 0 80px rgba(255, 0, 204, 0.5), inset 0 0 60px rgba(255, 0, 204, 0.05);
+            padding: 50px 60px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            transform: scale(0.85);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            overflow: hidden;
+        }
+
+        .fullscreen-toast.active .fullscreen-toast-inner {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .fullscreen-toast-inner::before {
+            content: '';
+            position: absolute;
+            top: -30%; left: -30%;
+            width: 160%; height: 160%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 204, 0.15), transparent 30%);
+            animation: rotate 8s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .toast-photo-wrap {
+            flex: 0 0 280px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .toast-photo {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 80px rgba(255, 0, 204, 0.3);
+            animation: photoPulse 2s ease-in-out infinite;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes photoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 80px rgba(255, 0, 204, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 0 0 100px rgba(255, 0, 204, 0.5); }
+        }
+
+        .toast-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toast-big-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: toastShake 0.8s ease-in-out infinite;
+        }
+
+        @keyframes toastShake {
+            0%, 100% { transform: rotate(0); }
+            20% { transform: rotate(-12deg); }
+            40% { transform: rotate(12deg); }
+            60% { transform: rotate(-8deg); }
+            80% { transform: rotate(8deg); }
+        }
+
+        .toast-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--primary-glow), var(--accent-gold), var(--primary-glow));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            margin-bottom: 18px;
+            text-shadow: 0 0 40px rgba(255, 0, 204, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .toast-subheading {
+            font-size: 18px;
+            color: #bbb;
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .toast-subheading strong {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .fullscreen-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 32px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .fullscreen-close:hover {
+            background: rgba(255, 0, 204, 0.3);
+            border-color: var(--primary-glow);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 0, 204, 0.6);
+        }
+
+        @media (max-width: 860px) {
+            header { padding: 15px 20px; flex-wrap: wrap; gap: 10px; }
+            .logo { font-size: 22px; }
+            .header-right { gap: 8px; }
+            .balance-container { padding: 6px 14px; }
+            .balance-amount { font-size: 15px; }
+            .donate-btn { padding: 8px 16px; font-size: 11px; }
+            .game-container { padding: 20px; }
+            .slots { gap: 10px; }
+            .reel { width: 80px; height: 80px; }
+            h1 { font-size: 28px; }
+            .spin-btn { padding: 15px 40px; font-size: 20px; width: 100%; }
+            .paytable-container { padding: 20px 15px; }
+            .combo-symbols img { width: 24px; height: 24px; }
+            .combo-name { display: none; }
+            .paytable td { padding: 12px 10px; font-size: 13px; }
+            .paytable thead th:nth-child(2) { display: none; }
+            .donate-modal { padding: 30px 20px; }
+            .amount-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .amount-option { padding: 12px 6px; font-size: 13px; }
+            .fullscreen-toast-inner {
+                flex-direction: column;
+                padding: 40px 25px;
+                gap: 25px;
+                text-align: center;
+            }
+            .toast-photo-wrap { flex: 0 0 auto; }
+            .toast-photo { width: 180px; height: 180px; }
+            .toast-heading { font-size: 32px; }
+            .toast-subheading { font-size: 15px; }
+            .toast-big-icon { font-size: 44px; }
+            .fullscreen-close { width: 48px; height: 48px; font-size: 26px; top: 15px; right: 15px; }
+            .fullscreen-toast { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Халиков</div>
+        <div class="header-right">
+            <div class="balance-container">
+                <span class="balance-icon">💰</span>
+                <span class="balance-amount" id="balance">1000</span>
+            </div>
+            <button class="donate-btn" id="donateBtn">💳 Донат</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+
+        <div class="game-container">
+            <h1>Казино</h1>
+            <p class="subtitle">Только три в ряд — только победа!</p>
+
+            <div class="slots">
+                <div class="reel" id="reel1"></div>
+                <div class="reel" id="reel2"></div>
+                <div class="reel" id="reel3"></div>
+            </div>
+
+            <div class="controls">
+                <div class="bet-controls">
+                    <button class="bet-btn" id="minusBet">-</button>
+                    <span class="bet-amount" id="betAmount">10</span>
+                    <button class="bet-btn" id="plusBet">+</button>
+                </div>
+                <button class="spin-btn" id="spinBtn">спин</button>
+                <div class="message" id="message"></div>
+            </div>
+        </div>
+
+        <div class="paytable-container">
+            <div class="paytable-title">Таблица выплат</div>
+            <table class="paytable">
+                <thead>
+                    <tr>
+                        <th>Комбинация</th>
+                        <th>Название</th>
+                        <th>Выплата</th>
+                    </tr>
+                </thead>
+                <tbody id="paytableBody"></tbody>
+            </table>
+            <p class="paytable-note">
+                Выплата начисляется <strong>только при трёх одинаковых символах</strong>.<br>
+                Два одинаковых символа <strong>не приносят выигрыша</strong>.<br>
+                Множитель умножается на вашу ставку.
+            </p>
+        </div>
+    </main>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДОНАТА ===== -->
+    <div class="modal-overlay" id="donateModal">
+        <div class="donate-modal">
+            <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+            <div class="modal-title">Поддержать проект</div>
+            <p class="modal-subtitle">Выберите сумму доната</p>
+            <div class="amount-grid" id="amountGrid">
+                <button class="amount-option" data-amount="100">100 ₽</button>
+                <button class="amount-option" data-amount="200">200 ₽</button>
+                <button class="amount-option" data-amount="300">300 ₽</button>
+                <button class="amount-option" data-amount="500">500 ₽</button>
+                <button class="amount-option" data-amount="700">700 ₽</button>
+                <button class="amount-option" data-amount="1000">1000 ₽</button>
+            </div>
+            <div class="custom-amount-wrap">
+                <input type="number" id="customAmount" placeholder="Своя сумма (100–1000)" min="100" max="1000">
+                <span class="currency">₽</span>
+            </div>
+            <button class="pay-btn" id="payBtn">Оплатить</button>
+        </div>
+    </div>
+
+    <!-- ===== ПОЛНОЭКРАННОЕ СООБЩЕНИЕ ===== -->
+    <div class="fullscreen-toast" id="fullscreenToast">
+        <button class="fullscreen-close" id="fullscreenClose" aria-label="Закрыть">✕</button>
+        <div class="fullscreen-toast-inner">
+            <div class="toast-photo-wrap">
+                <img 
+                    id="memeImage" 
+                    class="toast-photo" 
+                    src="images/mama.png" 
+                    alt="Фото"
+                    onerror="this.src='https://placehold.co/600x600/1a0a18/ff00cc?text=ФОТО'"
+                >
+            </div>
+            <div class="toast-content">
+                <span class="toast-big-icon">💳</span>
+                <div class="toast-heading">Верни маме карточку!</div>
+                <p class="toast-subheading">
+                    Серьёзно, <strong>положи карточку на место</strong>.<br>
+                    Мама уже волнуется. 😄
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // === КОНФИГУРАЦИЯ СИМВОЛОВ ===
+        // Впишите путь к своей картинке в поле image.
+        // Пустая строка '' = показывается эмодзи.
+        // ==========================================
+        const SYMBOLS_CONFIG = [
+            { key: 'cherry',  emoji: '🍒', image: 'images/cherry.png',  name: 'Вишня',   payout: 5   },
+            { key: 'lemon',   emoji: '🍋', image: 'images/lemon.png',   name: 'Лимон',   payout: 10  },
+            { key: 'bell',    emoji: '🔔', image: 'images/bell.png',    name: 'Колокол', payout: 20  },
+            { key: 'diamond', emoji: '💎', image: 'images/diamond.png', name: 'Алмаз',   payout: 50  },
+            { key: 'seven',   emoji: '7️⃣', image: 'images/seven.png',   name: 'Семёрка', payout: 100 },
+            { key: 'star',    emoji: '⭐', image: 'images/star.png',    name: 'Звезда',  payout: 200 }
+        ];
+
+        const SYMBOLS = SYMBOLS_CONFIG.map(s => s.key);
+        const SYMBOL_MAP = Object.fromEntries(SYMBOLS_CONFIG.map(s => [s.key, s]));
+
+        let balance = 1000;
+        let bet = 10;
+        const minBet = 10;
+        const maxBet = 500;
+        let isSpinning = false;
+
+        const balanceEl = document.getElementById('balance');
+        const betAmountEl = document.getElementById('betAmount');
+        const spinBtn = document.getElementById('spinBtn');
+        const messageEl = document.getElementById('message');
+        const reels = [
+            document.getElementById('reel1'),
+            document.getElementById('reel2'),
+            document.getElementById('reel3')
+        ];
+
+        // === Создание элемента символа (картинка или эмодзи) ===
+        function createSymbolEl(key) {
+            const data = SYMBOL_MAP[key];
+            const wrapper = document.createElement('span');
+            wrapper.className = 'symbol';
+            wrapper.dataset.key = key;
+            if (data.image && data.image.trim() !== '') {
+                const img = document.createElement('img');
+                img.src = data.image;
+                img.alt = data.name;
+                img.draggable = false;
+                img.onerror = () => { img.remove(); wrapper.textContent = data.emoji; };
+                wrapper.appendChild(img);
+            } else {
+                wrapper.textContent = data.emoji;
+            }
+            return wrapper;
+        }
+
+        // === Установка символа в барабан ===
+        function setReel(reel, key) {
+            reel.innerHTML = '';
+            const el = createSymbolEl(key);
+            const img = el.querySelector('img');
+            if (img) {
+                reel.appendChild(img); // картинка напрямую в .reel → работает .reel img
+            } else {
+                reel.textContent = el.textContent; // эмодзи как текст
+            }
+        }
+
+        // === Построение таблицы выплат ===
+        function buildPaytable() {
+            const tbody = document.getElementById('paytableBody');
+            const sorted = [...SYMBOLS_CONFIG].sort((a, b) => b.payout - a.payout);
+            sorted.forEach(sym => {
+                const tr = document.createElement('tr');
+                const isJackpot = sym.payout >= 100;
+                let badge = '';
+                if (sym.payout >= 200) badge = '<span class="badge badge-jackpot">MEGA</span>';
+                else if (sym.payout >= 100) badge = '<span class="badge badge-hot">HOT</span>';
+                const comboWrapper = document.createElement('span');
+                comboWrapper.className = 'combo-symbols';
+                for (let i = 0; i < 3; i++) comboWrapper.appendChild(createSymbolEl(sym.key));
+                tr.innerHTML = `
+                    <td></td>
+                    <td><span class="combo-name">${sym.name}</span></td>
+                    <td>
+                        <span class="combo-multiplier ${isJackpot ? 'jackpot' : ''}">x${sym.payout}</span>
+                        ${badge}
+                    </td>
+                `;
+                tr.querySelector('td').appendChild(comboWrapper);
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateUI() {
+            balanceEl.textContent = balance;
+            betAmountEl.textContent = bet;
+            document.getElementById('minusBet').disabled = (bet <= minBet || isSpinning);
+            document.getElementById('plusBet').disabled = (bet >= maxBet || bet >= balance || isSpinning);
+            spinBtn.disabled = (balance < bet || isSpinning);
+        }
+
+        document.getElementById('minusBet').addEventListener('click', () => {
+            if (bet > minBet) { bet -= 10; updateUI(); }
+        });
+        document.getElementById('plusBet').addEventListener('click', () => {
+            if (bet < maxBet && bet + 10 <= balance) { bet += 10; updateUI(); }
+        });
+
+        async function spin() {
+            if (isSpinning || balance < bet) return;
+            isSpinning = true;
+            messageEl.textContent = '';
+            messageEl.className = 'message';
+            reels.forEach(r => { r.style.boxShadow = ''; r.style.borderColor = ''; });
+            balance -= bet;
+            updateUI();
+            reels.forEach(r => r.classList.add('spinning'));
+
+            const spinInterval = setInterval(() => {
+                reels.forEach(reel => {
+                    setReel(reel, SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]);
+                });
+            }, 100);
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            clearInterval(spinInterval);
+            reels.forEach(r => r.classList.remove('spinning'));
+
+            const result = reels.map(() => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]);
+            reels.forEach((reel, i) => setReel(reel, result[i]));
+            checkWin(result);
+            isSpinning = false;
+            updateUI();
+        }
+
+        function checkWin(result) {
+            const [a, b, c] = result;
+            if (a === b && b === c) {
+                const data = SYMBOL_MAP[a];
+                const winAmount = bet * data.payout;
+                balance += winAmount;
+                messageEl.textContent = `🎉 ДЖЕКПОТ! ${data.name} ×${data.payout} = $${winAmount}`;
+                messageEl.className = 'message win-text';
+                reels.forEach(reel => {
+                    reel.style.boxShadow = '0 0 30px var(--accent-gold), inset 0 0 30px rgba(255, 215, 0, 0.3)';
+                    reel.style.borderColor = 'var(--accent-gold)';
+                    setTimeout(() => reel.style.borderColor = '', 1500);
+                });
+            } else {
+                messageEl.textContent = `😢 Нет трёх в ряд. Попробуйте ещё!`;
+                messageEl.className = 'message lose-text';
+            }
+            updateUI();
+        }
+
+        spinBtn.addEventListener('click', spin);
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !spinBtn.disabled) { e.preventDefault(); spin(); }
+        });
+
+        // === ДОНАТ ===
+        const donateBtn = document.getElementById('donateBtn');
+        const donateModal = document.getElementById('donateModal');
+        const modalClose = document.getElementById('modalClose');
+        const payBtn = document.getElementById('payBtn');
+        const amountGrid = document.getElementById('amountGrid');
+        const customAmount = document.getElementById('customAmount');
+        const fullscreenToast = document.getElementById('fullscreenToast');
+        const fullscreenClose = document.getElementById('fullscreenClose');
+
+        let selectedAmount = 100;
+
+        donateBtn.addEventListener('click', () => {
+            donateModal.classList.add('active');
+            selectedAmount = 100;
+            document.querySelectorAll('.amount-option').forEach(btn => {
+                btn.classList.toggle('selected', Number(btn.dataset.amount) === 100);
+            });
+            customAmount.value = '';
+        });
+
+        modalClose.addEventListener('click', () => donateModal.classList.remove('active'));
+        donateModal.addEventListener('click', (e) => {
+            if (e.target === donateModal) donateModal.classList.remove('active');
+        });
+
+        amountGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.amount-option');
+            if (!btn) return;
+            selectedAmount = Number(btn.dataset.amount);
+            customAmount.value = '';
+            document.querySelectorAll('.amount-option').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        });
+
+        customAmount.addEventListener('input', () => {
+            const val = parseInt(customAmount.value, 10);
+            if (!isNaN(val) && val >= 100 && val <= 1000) {
+                selectedAmount = val;
+                document.querySelectorAll('.amount-option').forEach(b => b.classList.remove('selected'));
+            }
+        });
+
+        payBtn.addEventListener('click', () => {
+            const val = parseInt(customAmount.value, 10);
+            if (customAmount.value !== '' && (isNaN(val) || val < 100 || val > 1000)) {
+                customAmount.style.borderColor = '#ff4444';
+                customAmount.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)';
+                setTimeout(() => {
+                    customAmount.style.borderColor = '';
+                    customAmount.style.boxShadow = '';
+                }, 1500);
+                return;
+            }
+            donateModal.classList.remove('active');
+            setTimeout(() => showFullscreenToast(), 300);
+        });
+
+        function showFullscreenToast() {
+            fullscreenToast.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideFullscreenToast() {
+            fullscreenToast.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        fullscreenClose.addEventListener('click', hideFullscreenToast);
+        fullscreenToast.addEventListener('click', (e) => {
+            if (e.target === fullscreenToast) hideFullscreenToast();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                donateModal.classList.remove('active');
+                hideFullscreenToast();
+            }
+        });
+
+        // === Инициализация ===
+        buildPaytable();
+        reels.forEach(reel => setReel(reel, 'cherry'));
+        updateUI();
+    </script>
+</body>
+</html>
